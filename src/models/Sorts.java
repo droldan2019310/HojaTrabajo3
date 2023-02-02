@@ -1,5 +1,11 @@
 package models;
 
-public class Sorts {
-    
+import java.util.ArrayList;
+
+public class Sorts<T extends Comparable<T>>  {
+
+
+ 
+
+
 }
