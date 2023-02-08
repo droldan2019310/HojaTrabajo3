@@ -69,5 +69,59 @@ public class Sorts<T extends Comparable<T>>  {
 			array[b] = array[a];
 			array[a] = value;
 		}
-	
+		
+		void mergeSort(T[] array, int start, int end)
+	    {
+	        if (start < end)
+	        {
+
+	            int middle = (start + end) / 2;
+
+	            mergeSort(array, start, middle);
+	            mergeSort(array, middle + 1, end);
+
+	            merge(array, start, middle, end);
+	        }
+	    }
+
+	    void merge(T[] array, int start, int middle, int end)
+	    {
+	        T[] leftArray  = (T[]) new Comparable[middle - start + 1];
+	        T[] rightArray = (T[]) new Comparable[end - middle];
+
+	        for (int i = 0; i < leftArray.length; ++i)
+	            leftArray[i] = array[start + i];
+
+	        for (int i = 0; i < rightArray.length; ++i)
+	            rightArray[i] = array[middle + 1 + i];
+
+	        int leftIndex = 0, rightIndex = 0;
+
+	        int currentIndex = start;
+
+	        while (leftIndex < leftArray.length && rightIndex < rightArray.length)
+	        {
+	            if (leftArray[leftIndex].compareTo(rightArray[rightIndex]) <= 0)
+	            {
+	                array[currentIndex] = leftArray[leftIndex];
+	                leftIndex++;
+	            }
+	            else
+	            {
+	                array[currentIndex] = rightArray[rightIndex];
+	                rightIndex++;
+	            }
+	            currentIndex++;
+	        }
+
+	        while (leftIndex < leftArray.length) array[currentIndex++] = leftArray[leftIndex++];
+	        
+	        while (rightIndex < rightArray.length) array[currentIndex++] = rightArray[rightIndex++];
+	    }
+
+//Algoritmo de mergesort https://big-o.io/examples/merge-sort/java-generic/.
+//Algoritmo de buublesort obtenido https://www.geeksforgeeks.org/bubble-sort/
+//Algoritmo de GnomeSort obtenido de http://lwh.free.fr/pages/algo/tri/tri_gnome_es.html
+//Algoritmo de Quicksort obtenido de http://puntocomnoesunlenguaje.blogspot.com/2012/12/java-quicksort.html
 }
+
