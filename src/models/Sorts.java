@@ -1,5 +1,9 @@
 package models;
 
+import java.util.Arrays;
+import java.util.LinkedList;
+import java.util.Queue;
+
 public class Sorts<T extends Comparable<T>>  {
 
 	public T[] quickSort(T[] a, int left, int right) {
@@ -68,7 +72,7 @@ public class Sorts<T extends Comparable<T>>  {
 		array[a] = value;
 	}
 		
-	public void mergeSort(T[] array, int start, int end){
+	public T[] mergeSort(T[] array, int start, int end){
 		if (start < end)
 		{
 
@@ -77,11 +81,12 @@ public class Sorts<T extends Comparable<T>>  {
 			mergeSort(array, start, middle);
 			mergeSort(array, middle + 1, end);
 
-			merge(array, start, middle, end);
+			return merge(array, start, middle, end);
 		}
+		return null;
 	}
 
-	public void merge(T[] array, int start, int middle, int end){
+	public T[] merge(T[] array, int start, int middle, int end){
 		T[] leftArray  = (T[]) new Comparable[middle - start + 1];
 		T[] rightArray = (T[]) new Comparable[end - middle];
 
@@ -113,10 +118,69 @@ public class Sorts<T extends Comparable<T>>  {
 		while (leftIndex < leftArray.length) array[currentIndex++] = leftArray[leftIndex++];
 		
 		while (rightIndex < rightArray.length) array[currentIndex++] = rightArray[rightIndex++];
+
+		return array;
 	}
+
+
+
+	
+    private T getMax(T[] arr){
+    	T max = arr[0];
+        for (int i = 1; i < arr.length; i++) {
+        	if(max.compareTo(arr[i]) == -1){
+				max = arr[i];
+			}
+        }
+        return max;
+    }
+ 
+
+    
+
+    private void counterSort(T[] arr, int e){
+    	Integer[] output = new Integer[arr.length];
+        int i;
+        int contador[] = new int[10];
+        Arrays.fill(contador, 0);
+        
+		for (i = 0; i < arr.length; i++) {	
+			Integer value = (Integer) arr[i];
+			contador[((value/e) % 10)]++;
+		}
+ 
+        for (i = 1; i < 10; i++) {        	
+        	contador[i] += contador[i - 1];
+        }
+ 
+        for (i = arr.length - 1; i >= 0; i--) {
+        	Integer value = (Integer) arr[i];
+            output[contador[((value / e) % 10)] - 1] = (Integer) arr[i];
+            contador[((value / e) % 10)]--;
+        }
+        
+        for (i = 0; i < arr.length; i++){
+            arr[i] =  (T) output[i];
+        }
+    }
+ 
+
+
+    public T[] RadixSort(T[] arr){
+
+        Integer m = (Integer) getMax(arr);
+ 
+        for (int exp = 1;   m / exp > 0; exp *= 10) {        	
+        	counterSort(arr, exp);
+        }
+
+		return arr;
+    }
+	
 //Algoritmo de mergesort https://big-o.io/examples/merge-sort/java-generic/.
 //Algoritmo de buublesort obtenido https://www.geeksforgeeks.org/bubble-sort/
 //Algoritmo de GnomeSort obtenido de http://lwh.free.fr/pages/algo/tri/tri_gnome_es.html
 //Algoritmo de Quicksort obtenido de http://puntocomnoesunlenguaje.blogspot.com/2012/12/java-quicksort.html
+//Algoritmo de Radixsort obtenido de https://www.geeksforgeeks.org/radix-sort/
 }
 
