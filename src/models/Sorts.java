@@ -1,11 +1,5 @@
 package models;
 
-<<<<<<< Updated upstream
-public class Sorts {
-    
-=======
-import java.util.ArrayList;
-
 public class Sorts<T extends Comparable<T>>  {
 
 	public T[] quickSort(T[] a, int left, int right) {
@@ -39,5 +33,4 @@ public class Sorts<T extends Comparable<T>>  {
  
 
 
->>>>>>> Stashed changes
 }
